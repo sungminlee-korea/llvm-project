@@ -54,6 +54,8 @@ Changes to the LLVM IR
   the standard vector type ``<1 x i64>`` in bitcode upgrade.
 * Renamed ``llvm.experimental.stepvector`` intrinsic to ``llvm.stepvector``.
 
+* Introduced `noalias.addrspace` metadata.
+
 Changes to LLVM infrastructure
 ------------------------------
 
