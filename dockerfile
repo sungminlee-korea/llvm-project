@@ -1,4 +1,5 @@
-FROM ubuntu:22.04
+FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
+# FROM ubuntu:22.04
 
 RUN apt-get update -y
 RUN apt-get upgrade -y
