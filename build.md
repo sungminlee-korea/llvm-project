@@ -26,15 +26,24 @@ cmake -G Ninja ../llvm \
    -DCMAKE_C_COMPILER=clang \
    -DCMAKE_CXX_COMPILER=clang++ \
    -DLLVM_ENABLE_LLD=ON \
-   -DLLVM_CCACHE_BUILD=OFF
-
-   # 리빌드시 -DLLVM_CCACHE_BUILD=ON
+   -DLLVM_CCACHE_BUILD=ON
 
 cmake --build . --target check-mlir
 ```
 
-# 참고
+# Debug build
 ```
-If you need debug info, you can use -DCMAKE_BUILD_TYPE=Debug or -DCMAKE_BUILD_TYPE=RelWithDebInfo. 
-It is recommended to use -DLLVM_USE_SPLIT_DWARF=ON to save ~ 30%-40% disk space with debug builds.
+cmake -G Ninja ../llvm \
+   -DLLVM_ENABLE_PROJECTS=mlir \
+   -DLLVM_BUILD_EXAMPLES=ON \
+   -DLLVM_TARGETS_TO_BUILD="Native;NVPTX;AMDGPU" \
+   -DCMAKE_BUILD_TYPE=Debug \
+   -DLLVM_ENABLE_ASSERTIONS=ON \
+   -DCMAKE_C_COMPILER=clang \
+   -DCMAKE_CXX_COMPILER=clang++ \
+   -DLLVM_ENABLE_LLD=ON \
+   -DLLVM_CCACHE_BUILD=ON \
+   -DLLVM_USE_SPLIT_DWARF=ON
+
+cmake --build . --target check-mlir
 ```

@@ -10,6 +10,7 @@ RUN apt-get install -y vim
 RUN apt-get update && \
     apt-get install -y python3 python3-pip
 RUN apt-get install -y lsb-release wget software-properties-common gnupg clang lld
+RUN apt-get install -y ccache 
 RUN apt-get install ninja-build
 # RUN bash -c "$(wget -O - https://apt.llvm.org/llvm.sh)"
 # 일반 사용자 생성 및 비밀번호 설정
