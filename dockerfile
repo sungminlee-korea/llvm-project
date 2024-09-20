@@ -7,7 +7,8 @@ RUN apt-get install gcc g++ gdb -y
 RUN apt-get install make cmake -y
 RUN apt-get install -y sudo
 RUN apt-get install -y git
-RUN apt-get install -y vim
+RUN apt-get update && \ 
+    apt-get install -y vim
 RUN apt-get update && \
     apt-get install -y python3 python3-pip
 RUN apt-get install -y lsb-release wget software-properties-common gnupg clang lld

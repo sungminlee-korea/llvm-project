@@ -1,14 +1,14 @@
 # 도커 빌드
 ```
-docker build -f dockerfile -t llvm_docker:v1.0 .
+docker build -f dockerfile -t mlir_docker:v1.0 .
 ```
 # 도커실행 (w/ args)
 ```
-docker run -d -t --name llvm_container -v $(pwd):/workspace --gpus all llvm_docker:v1.0
+docker run -d -t --name mlir_container -v $(pwd):/workspace --gpus all mlir_docker:v1.0
 ```
 ```
 vscode 연결 or
-docker exec -it llvm_container /bin/bash
+docker exec -it mlir_container /bin/bash
 ```
 # mlir build
 - [공식가이드](https://mlir.llvm.org/getting_started/)
