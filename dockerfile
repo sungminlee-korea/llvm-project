@@ -26,4 +26,4 @@ USER lsm0729
 WORKDIR /workspace
 
 # 파일 복사 (root 권한으로 복사됨)
-COPY --chown=lsm0729:lsm0729 . /workspace
+# COPY --chown=lsm0729:lsm0729 . /workspace
