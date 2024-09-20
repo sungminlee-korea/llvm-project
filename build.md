@@ -33,7 +33,6 @@ cmake --build . --target check-mlir
 
 # 참고
 ```
-
 If you need debug info, you can use -DCMAKE_BUILD_TYPE=Debug or -DCMAKE_BUILD_TYPE=RelWithDebInfo. 
 It is recommended to use -DLLVM_USE_SPLIT_DWARF=ON to save ~ 30%-40% disk space with debug builds.
 ```
