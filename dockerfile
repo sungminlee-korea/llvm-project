@@ -26,4 +26,4 @@ WORKDIR /workspace
 
 # 파일 복사 (root 권한으로 복사됨)
 COPY --chown=lsm0729:lsm0729 .ssh/id_rsa /home/lsm0729/.ssh/
-COPY --chown=lsm0729:lsm0729 .ssh/id_rsa.pub /home/lsm0729/.ssh/qa
+COPY --chown=lsm0729:lsm0729 .ssh/id_rsa.pub /home/lsm0729/.ssh/
