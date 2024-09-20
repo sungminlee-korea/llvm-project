@@ -9,6 +9,8 @@ vscode 연결 or
 docker exec -it llvm_container /bin/bash
 ```
 # llvm build
+[공식가이드](https://mlir.llvm.org/getting_started/)
+
 ```
 mkdir build
 cd build
@@ -24,12 +26,12 @@ cmake -G Ninja ../llvm \
    -DLLVM_ENABLE_LLD=ON \
    -DLLVM_CCACHE_BUILD=OFF
 
-# 리빌드시 -DLLVM_CCACHE_BUILD=ON
-
 cmake --build . --target check-mlir
 ```
 
 # 참고
 ```
-https://mlir.llvm.org/getting_started/
+# 리빌드시 -DLLVM_CCACHE_BUILD=ON
+If you need debug info, you can use -DCMAKE_BUILD_TYPE=Debug or -DCMAKE_BUILD_TYPE=RelWithDebInfo. 
+It is recommended to use -DLLVM_USE_SPLIT_DWARF=ON to save ~ 30%-40% disk space with debug builds.
 ```
