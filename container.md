@@ -1,7 +1,7 @@
 
 ### 컨테이너 생성 (w/ args)
 ```
-docker run -d -t --name mlir_study -v $(pwd):/workspace --gpus all cuda_dafault:v1.0
+docker run -d -t --name mlir_study -v $(pwd):/workspace --gpus all cuda_default:v1.0
 ```
 ### 컨테이너 실행
 ```
