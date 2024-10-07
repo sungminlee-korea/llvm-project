@@ -55,6 +55,12 @@ class RISCVTTIImpl : public BasicTTIImplBase<RISCVTTIImpl> {
   /// type.
   InstructionCost getConstantPoolLoadCost(Type *Ty,
                                           TTI::TargetCostKind CostKind);
+
+  /// Return the cost if a shufflevector can be consist of multiple vslideup.
+  /// Otherwise, return InstructionCost::getInvalid().
+  InstructionCost isMultipleInsertSubvector(VectorType *Tp, ArrayRef<int> Mask,
+                                            TTI::TargetCostKind CostKind);
+
 public:
   explicit RISCVTTIImpl(const RISCVTargetMachine *TM, const Function &F)
       : BaseT(TM, F.getDataLayout()), ST(TM->getSubtargetImpl(F)),
@@ -149,6 +155,11 @@ public:
                                  ArrayRef<const Value *> Args = {},
                                  const Instruction *CxtI = nullptr);
 
+  InstructionCost getScalarizationOverhead(VectorType *Ty,
+                                           const APInt &DemandedElts,
+                                           bool Insert, bool Extract,
+                                           TTI::TargetCostKind CostKind);
+
   InstructionCost getIntrinsicInstrCost(const IntrinsicCostAttributes &ICA,
                                         TTI::TargetCostKind CostKind);
 
@@ -168,6 +179,8 @@ public:
                                          Align Alignment,
                                          TTI::TargetCostKind CostKind,
                                          const Instruction *I);
+
+  InstructionCost getCostOfKeepingLiveOverCall(ArrayRef<Type *> Tys);
 
   InstructionCost getCastInstrCost(unsigned Opcode, Type *Dst, Type *Src,
                                    TTI::CastContextHint CCH,
@@ -193,10 +206,12 @@ public:
                   TTI::OperandValueInfo OpdInfo = {TTI::OK_AnyValue, TTI::OP_None},
                   const Instruction *I = nullptr);
 
-  InstructionCost getCmpSelInstrCost(unsigned Opcode, Type *ValTy, Type *CondTy,
-                                     CmpInst::Predicate VecPred,
-                                     TTI::TargetCostKind CostKind,
-                                     const Instruction *I = nullptr);
+  InstructionCost getCmpSelInstrCost(
+      unsigned Opcode, Type *ValTy, Type *CondTy, CmpInst::Predicate VecPred,
+      TTI::TargetCostKind CostKind,
+      TTI::OperandValueInfo Op1Info = {TTI::OK_AnyValue, TTI::OP_None},
+      TTI::OperandValueInfo Op2Info = {TTI::OK_AnyValue, TTI::OP_None},
+      const Instruction *I = nullptr);
 
   InstructionCost getCFInstrCost(unsigned Opcode, TTI::TargetCostKind CostKind,
                                  const Instruction *I = nullptr);

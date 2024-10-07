@@ -727,13 +727,7 @@ void Flang::ConstructJob(Compilation &C, const JobAction &JA,
 
   addFortranDialectOptions(Args, CmdArgs);
 
-  // Color diagnostics are parsed by the driver directly from argv and later
-  // re-parsed to construct this job; claim any possible color diagnostic here
-  // to avoid warn_drv_unused_argument.
-  Args.getLastArg(options::OPT_fcolor_diagnostics,
-                  options::OPT_fno_color_diagnostics);
-  if (Diags.getDiagnosticOptions().ShowColors)
-    CmdArgs.push_back("-fcolor-diagnostics");
+  handleColorDiagnosticsArgs(D, Args, CmdArgs);
 
   // LTO mode is parsed by the Clang driver library.
   LTOKind LTOMode = D.getLTOMode();
@@ -884,20 +878,6 @@ void Flang::ConstructJob(Compilation &C, const JobAction &JA,
     Args.AddLastArg(CmdArgs, options::OPT_save_temps_EQ);
 
   addDashXForInput(Args, Input, CmdArgs);
-
-  bool FRecordCmdLine = false;
-  bool GRecordCmdLine = false;
-  if (shouldRecordCommandLine(TC, Args, FRecordCmdLine, GRecordCmdLine)) {
-    const char *CmdLine = renderEscapedCommandLine(TC, Args);
-    if (FRecordCmdLine) {
-      CmdArgs.push_back("-record-command-line");
-      CmdArgs.push_back(CmdLine);
-    }
-    if (TC.UseDwarfDebugFlags() || GRecordCmdLine) {
-      CmdArgs.push_back("-dwarf-debug-flags");
-      CmdArgs.push_back(CmdLine);
-    }
-  }
 
   CmdArgs.push_back(Input.getFilename());
 
